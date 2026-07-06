@@ -56,7 +56,6 @@ OBJS = \
 	
 lookup_tables:
 	./checkout_data_files.sh
-	sh ./install_custom_wrf_files.sh
 
 core_physics_mmm: core_physics_init
 	(cd physics_mmm; $(MAKE) -f Makefile.mpas all)
