@@ -3571,7 +3571,7 @@ SUBROUTINE SFCDIF_URB (ZLM,Z0,THZ0,THLM,SFCSPD,AKANDA,AKMS,AKHS,RLMO,CD,ZT_OUT,V
          END IF
             USTAR = MAX (SQRT (AKMS * SQRT (DU2+ WSTAR2)),EPSUST)
             ! KCL/TL
-            ZT = EXP (ZILFC * SQRT (USTAR * Z0))* Z0
+            ! ZT = EXP (ZILFC * SQRT (USTAR * Z0))* Z0
             IF (PRESENT(VEGFRAC)) THEN
               ! Kawai et al. (2009) JAMC
               ZT = EXP (2.0-(AKANDA-0.9*VEGFRAC**0.29)*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
