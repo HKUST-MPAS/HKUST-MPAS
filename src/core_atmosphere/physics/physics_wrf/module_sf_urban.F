@@ -66,12 +66,12 @@ use module_wrf_error
    REAL, ALLOCATABLE, DIMENSION(:) :: Z0HB_TBL, Z0HG_TBL
    REAL, ALLOCATABLE, DIMENSION(:) :: TRLEND_TBL, TBLEND_TBL, TGLEND_TBL
    REAL, ALLOCATABLE, DIMENSION(:) :: AKANDA_URBAN_TBL
-   ! -- start -- Takane-et-al.2024_GMD
-   REAL, ALLOCATABLE, DIMENSION(:) :: AB_BUILD_RATIO_TBL
-   REAL, ALLOCATABLE, DIMENSION(:,:) :: AC_FLOOR_RATIO_TBL
-   REAL, ALLOCATABLE, DIMENSION(:) :: AC_USAGE_RATIO_CL_TBL
-   REAL, ALLOCATABLE, DIMENSION(:) :: AC_USAGE_RATIO_HT_TBL
-! -- end -- Takane-et-al.2024_GMD
+!  ! -- start -- Takane-et-al.2024_GMD
+!  REAL, ALLOCATABLE, DIMENSION(:) :: AB_BUILD_RATIO_TBL
+!  REAL, ALLOCATABLE, DIMENSION(:,:) :: AC_FLOOR_RATIO_TBL
+!  REAL, ALLOCATABLE, DIMENSION(:) :: AC_USAGE_RATIO_CL_TBL
+!  REAL, ALLOCATABLE, DIMENSION(:) :: AC_USAGE_RATIO_HT_TBL
+! ! -- end -- Takane-et-al.2024_GMD
 !for BEP
 
    ! MAXDIRS :: The maximum number of street directions we're allowed to define
@@ -90,7 +90,7 @@ use module_wrf_error
    INTEGER                         :: BOUNDR_DATA,BOUNDB_DATA,BOUNDG_DATA
    INTEGER                         :: CH_SCHEME_DATA, TS_SCHEME_DATA
    INTEGER                         :: ahoption        ! Miao, 2007/01/17, cal. ah
-   INTEGER                         :: copoption       ! Takane-et-al.2024_GMD
+!  INTEGER                         :: copoption       ! Takane-et-al.2024_GMD
    REAL, DIMENSION(1:24)           :: ahdiuprf        ! ah diurnal profile, tloc: 1-24
    REAL, DIMENSION(1:24)           :: hsequip_tbl
 
@@ -332,12 +332,12 @@ use module_wrf_error
                     lp_urb,hgt_urb,frc_urb,lb_urb,zo_check,           & ! O
                     CMCR,TGR,TGRL,SMR,CMGR_URB,CHGR_URB,jmonth, jday,      & ! H
                     DRELR,DRELB,DRELG,FLXHUMR,FLXHUMB,FLXHUMG, SR, SB, SG, RR, RB, RG, HR, HB, HG, ELER, ELEB, ELEG, G0R, G0B, G0G)
-! -- start -- Takane-et-al.2024_GMD
-                  !   HEATRS_URB, QF_URB, QFB_URB,                      &
-                  !   QFB_CL_URB, QFB_HT_URB,                           &
-                  !   ECAC_URB, EC_URB, COP_URB 
-                  !  )
-! -- end -- Takane-et-al.2024_GMD
+!  ! -- start -- Takane-et-al.2024_GMD
+!                  !   HEATRS_URB, QF_URB, QFB_URB,                      &
+!                  !   QFB_CL_URB, QFB_HT_URB,                           &
+!                  !   ECAC_URB, EC_URB, COP_URB
+!                  !  )
+! ! -- end -- Takane-et-al.2024_GMD
 
    IMPLICIT NONE
 
@@ -398,7 +398,7 @@ use module_wrf_error
 
    REAL, INTENT(IN)    :: XLAT ! latitude                               [deg]
    REAL, INTENT(IN)    :: DELT ! time step                              [s]
-   REAL, INTENT(IN)    :: CHS,CHS2 ! CH*U at za and 2 m             [m/s] !cye
+   REAL, INTENT(INOUT)    :: CHS,CHS2 ! CH*U at za and 2 m             [m/s] !cye
    REAL    :: CHS_urban,CHS2_urban ! CH*U at za and 2 m             [m/s] !cye
 
    REAL, INTENT(INOUT) :: SSGD ! downward direct short wave radiation   [W/m/m]
@@ -502,21 +502,20 @@ use module_wrf_error
    REAL :: T1VR, T1VC,TH2V
    REAL :: RLMO_URB
    REAL :: AKANDA_URBAN
-   ! -- start -- Takane-et-al.2024_GMD
-   REAL :: HSEQUIP_SCALE_FACTOR, COP, PERFLO, TARGTEMP
-   REAL,    DIMENSION (1:24) :: HSEQUIP
-   REAL :: ROOF_WIDTH2, ROAD_WIDTH2
-   REAL :: AB_BUILD_RATIO  ! the ratio of abandoned houses/buildings to all the houses/buildings in a city block
-   REAL,    DIMENSION (1:24) :: AC_FLOOR_RATIO  ! the ratio of air-conditioned floor area to total floor area
-   REAL :: AC_USAGE_RATIO_CL  ! the ratio of AC usage for cooling or heating to all the cooling and heating equipment
-   REAL :: AC_USAGE_RATIO_HT  ! the ratio of AC usage for cooling or heating to all the cooling and heating equipment
-! -- end -- Takane-et-al.2024_GMD
+!  ! -- start -- Takane-et-al.2024_GMD
+!  REAL :: HSEQUIP_SCALE_FACTOR, COP, PERFLO, TARGTEMP
+!  REAL,    DIMENSION (1:24) :: HSEQUIP
+!  REAL :: ROOF_WIDTH2, ROAD_WIDTH2
+!  REAL :: AB_BUILD_RATIO  ! the ratio of abandoned houses/buildings to all the houses/buildings in a city block
+!  REAL,    DIMENSION (1:24) :: AC_FLOOR_RATIO  ! the ratio of air-conditioned floor area to total floor area
+!  REAL :: AC_USAGE_RATIO_CL  ! the ratio of AC usage for cooling or heating to all the cooling and heating equipment
+!  REAL :: AC_USAGE_RATIO_HT  ! the ratio of AC usage for cooling or heating to all the cooling and heating equipment
+! ! -- end -- Takane-et-al.2024_GMD
    
    REAL :: TH2X                                                !m
    
    INTEGER :: BOUNDR, BOUNDB, BOUNDG
    INTEGER :: CH_SCHEME, TS_SCHEME
-   INTEGER :: SURFACE_DIAGNOSE = 2 !cye add surface diagnose method, 1=default, 2=new
 
    LOGICAL :: SHADOW  ! [true=consider svf and shadow effects, false=consider svf effect only]
 
@@ -578,24 +577,24 @@ use module_wrf_error
    REAL :: XXX2, PSIM2, PSIH2, XXX10, PSIM10, PSIH10
    REAL :: PSIX, PSIT, PSIX2, PSIT2, PSIX10, PSIT10
 
-   ! -- start -- Takane-et-al.2024_GMD
-   REAL :: HEATRS_URB          ! Heat transferred into buildings through wall and roof in [W/m/m]
-   REAL :: QF_URB              ! Total anthropogenic heat (from buildings + traffic) [W/m/m]
-   REAL :: QFB_URB             ! Anthropogenic heat from buildings [W/m/m]
-   REAL :: QFB_CL_URB          ! QFB for cooling [W/m/m]
-   REAL :: QFB_HT_URB          ! QFB for heating [W/m/m]
-   REAL :: ECAC_URB            ! Electricity consumption by AC use [W/m/m]
-   REAL :: EC_URB              ! ECAC + BASELOAD
-   REAL :: AP_BASELOAD         ! BASELOAD by appliance [W/floor-m2]
-   REAL :: OC_BASELOAD         ! BASELOAD by occupant [W/floor-m2]
-   REAL :: BASELOAD            ! total baseload (AP_BASELOAD + OC_BASELOAD) [W/floor-m2]
-   REAL :: BASELOAD_LAND       ! total baseload (AP_BASELOAD + OC_BASELOAD) [W/m2]
-   real,parameter  :: HEAT_PERSON  = 43.7  ! heat generation by a person [W/person]
-   real,parameter  :: FLOOR_HEIGHT =  3.0  ! floor height [m]
-   REAL :: COP_URB             ! simulated COP [-]
-   REAL :: Hin                 ! indoor sensible heat load [W]  ! 2024.08.08
-   REAL :: Hout                ! indoor sensible heat load processed by HAC systems [W]  ! 2024.08.08
-! -- end -- Takane-et-al.2024_GMD
+!  ! -- start -- Takane-et-al.2024_GMD
+!  REAL :: HEATRS_URB          ! Heat transferred into buildings through wall and roof in [W/m/m]
+!  REAL :: QF_URB              ! Total anthropogenic heat (from buildings + traffic) [W/m/m]
+!  REAL :: QFB_URB             ! Anthropogenic heat from buildings [W/m/m]
+!  REAL :: QFB_CL_URB          ! QFB for cooling [W/m/m]
+!  REAL :: QFB_HT_URB          ! QFB for heating [W/m/m]
+!  REAL :: ECAC_URB            ! Electricity consumption by AC use [W/m/m]
+!  REAL :: EC_URB              ! ECAC + BASELOAD
+!  REAL :: AP_BASELOAD         ! BASELOAD by appliance [W/floor-m2]
+!  REAL :: OC_BASELOAD         ! BASELOAD by occupant [W/floor-m2]
+!  REAL :: BASELOAD            ! total baseload (AP_BASELOAD + OC_BASELOAD) [W/floor-m2]
+!  REAL :: BASELOAD_LAND       ! total baseload (AP_BASELOAD + OC_BASELOAD) [W/m2]
+!  real,parameter  :: HEAT_PERSON  = 43.7  ! heat generation by a person [W/person]
+!  real,parameter  :: FLOOR_HEIGHT =  3.0  ! floor height [m]
+!  REAL :: COP_URB             ! simulated COP [-]
+!  REAL :: Hin                 ! indoor sensible heat load [W]  ! 2024.08.08
+!  REAL :: Hout                ! indoor sensible heat load processed by HAC systems [W]  ! 2024.08.08
+! ! -- end -- Takane-et-al.2024_GMD
 
    REAL :: TRP, TBP, TGP, TCP, QCP, TST, QST
 
@@ -653,29 +652,21 @@ use module_wrf_error
 !-------------------------------------------------------------------------------
 ! Set parameters
 !-------------------------------------------------------------------------------
-!------------------------------------------cye-add-RSL----------------------------------- 2025-12-05
-REAL :: zeta_prime_M, zeta_prime_H
-REAL :: termM1, termM2, termM3, PSIM_hat
-REAL :: termH1, termH2, termH3, PSIH_hat
-REAL :: lamda_hat, mu_hat_M, mu_hat_H, nu_hat, z_hat, chi
-REAL :: chi10, zeta10, zeta10_prime
-REAL :: termM1_10, termM2_10, termM3_10, PSIM10_hat
-REAL :: chi2, zeta2, zeta2_prime
-REAL :: termH1_2, termH2_2, termH3_2, PSIH2_hat
-REAL :: Z0LZ, Z0LZ10, Z0HLZ, Z0HLZ2
-!------------------------------------------cye-add-RSL-----------------------------------
-REAL :: U2,V2,CH2,Z0HR !cye
+
+
 
 ! Miao, 2007/01/17, cal. ah
-! -- start -- Takane-et-al.2024_GMD
+   if(ahoption==1) then
    tloc=mod(int(OMG/PI*180./15.+12.+0.5 ),24)
      if(tloc.lt.0) tloc=tloc+24
      if(tloc==0) tloc=24
-! -- end -- Takane-et-al.2024_GMD
+   endif
 ! Yang, 2014/10/08, cal. alh
+   if(alhoption==1) then
      tloc2=mod(int((OMG/PI*180./15.+12.)*2.+0.5 ),48)
      if(tloc2.lt.0) tloc2=tloc2+48
      if(tloc2==0) tloc2=48
+   endif
 
    CALL read_param(I,UTYPE,ZR,SIGMA_ZED,Z0C,Z0HC,ZDC,SVF,R,RW,HGT,  &
                    AH,CAPR,CAPB,CAPG,AKSR,AKSB,AKSG,ALBR,ALBB,    &
@@ -686,14 +677,9 @@ REAL :: U2,V2,CH2,Z0HR !cye
                    BUILDING_WIDTH, NUMHGT, HEIGHT_BIN,            & 
                    HPERCENT_BIN,                                  & 
 !end BEP
-                   BOUNDR,BOUNDB,BOUNDG,CH_SCHEME,TS_SCHEME,      &
-! -- start -- Takane-et-al.2024_GMD
-                   AKANDA_URBAN,ALH,                              &
-                   HSEQUIP, HSEQUIP_SCALE_FACTOR, COP, PERFLO,    &
-                   TARGTEMP,                                      &
-                   AB_BUILD_RATIO, AC_FLOOR_RATIO,                &
-                   AC_USAGE_RATIO_CL, AC_USAGE_RATIO_HT )
-! -- end -- Takane-et-al.2024_GMD
+                   BOUNDR,BOUNDB,BOUNDG,CH_SCHEME,TS_SCHEME,  &
+                   AKANDA_URBAN,ALH )
+
 
 ! Glotfelty, 2012/07/05, NUDAPT Modification
 
@@ -798,7 +784,6 @@ REAL :: U2,V2,CH2,Z0HR !cye
 
 
 
-
   !Calculate the following urban canyon geometry parameters following Macdonald's (1998) formulations
       Cd         = 1.2
       alpha_macd = 4.43
@@ -858,14 +843,11 @@ REAL :: U2,V2,CH2,Z0HR !cye
 
 
 ! Miao, 2007/01/17, cal. ah
-! -- start -- Takane-et-al.2024_GMD
-!   if(ahoption==1) AH=AH*ahdiuprf(tloc)
-   if(ahoption==1 .or. ahoption==2) AH=AH*ahdiuprf(tloc)
-! -- end -- Takane-et-al.2024_GMD
 
-! -- start -- Takane-et-al.2024_GMD
-   AP_BASELOAD = HSEQUIP_SCALE_FACTOR * HSEQUIP(tloc)
-! -- start -- Takane-et-al.2024_GMD
+  if(ahoption==1) AH=AH*ahdiuprf(tloc)
+
+
+
 
 ! Yang, 2014/10/08, cal. alh
    Kalh=0
@@ -879,9 +861,6 @@ REAL :: U2,V2,CH2,Z0HR !cye
 
    IF( ZDC+Z0C+2. >= ZA) THEN
    
-          open( 30, file= 'output.csv',position="append" )!cye-write
-          write(30,*) 'ZDC,Z0C,ZA',ZDC,Z0C,ZA
-          close(30) 
 
     FATAL_ERROR("ZDC + Z0C + 2m is larger than the 1st WRF level - Stop in subroutine urban - change ZDC and Z0C" ) 
    END IF
@@ -957,7 +936,6 @@ REAL :: U2,V2,CH2,Z0HR !cye
      ! BB formulation from Inoue (1963)
      BB = 0.4 * ZR / ( XLB * alog( ( ZR - ZDC ) / Z0C ) )
      UC=UR*EXP(-BB*(1.-ZC/ZR))
-
 
 
 
@@ -1343,7 +1321,6 @@ IF (.not. distributed_aerodynamics_option) THEN
    ! CALL SFCDIF_URB(2.,Z0C,T1VC,TH2V,UA,AKANDA_URBAN,CMC2_URB,CHC2_URB,RLMO_URB,CDC2)
    ! ALPHAC2 =  RHO*CP*CHC2_URB
 
-
    IF (CH_SCHEME == 1) THEN 
 
      Z=ZDC
@@ -1433,10 +1410,6 @@ ENDIF
 
        ES=6.11*EXP( (2.5*10.**6./461.51)*(TGP-273.15)/(273.15*TGP) ) 
        DESDT=(2.5*10.**6./461.51)*ES/(TGP**2.)
-
-         ! open( 30, file= 'output.csv',position="append" )!cye-write
-         ! write(30,*) PS,ES,0.378*ES
-         ! close(30) 
 
           
        QS0G=0.622*ES/(PS-0.378*ES)        
@@ -1652,104 +1625,8 @@ ENDIF
  if(groption==1) then
    if(ahoption==1) then
      FLXTH  = ((1.-FGR)*R*FLXTHR + FGR*R*FLXTHGR + W*FLXTHB + RW*FLXTHG)+ AH/RHOO/CPP
-     ! -- start -- Takane-et-al.2024_GMD
-       QF_URB     = AH
-       HEATRS_URB = 0.
-       QFB_URB    = 0.
-       QFB_CL_URB = 0.
-       QFB_HT_URB = 0.
-       ECAC_URB   = 0.
-       EC_URB     = 0.
-       COP_URB    = 0.       
-       Hin        = 0.
-       Hout       = 0.
-   else if(ahoption==2) then
-     HEATRS_URB        = ( 2.0*HGT*697.7*60.*AKSB*(TBL(4)-TBLEND)/(DZB(4)/2.) ) &
-                       + (       R*697.7*60.*AKSR*(TRL(4)-TRLEND)/(DZR(4)/2.) ) ! [W/m2]
-     OC_BASELOAD       = PERFLO * HEAT_PERSON                              ! [W/floor-m2]
-     BASELOAD          = AP_BASELOAD + OC_BASELOAD                         ! [W/floor-m2]
-     BASELOAD_LAND     = BASELOAD &
-                       * (((ZR/FLOOR_HEIGHT)*ROOF_WIDTH_kike(UTYPE))/(ROOF_WIDTH_kike(UTYPE)+ROAD_WIDTH_kike(UTYPE))) ! conver from [W/floor-m2] to [W/m2]
-     Hin  = BASELOAD*((ZR/FLOOR_HEIGHT)*ROOF_WIDTH_kike(UTYPE) &
-          + HEATRS_URB*(ROOF_WIDTH_kike(UTYPE)+ROAD_WIDTH_kike(UTYPE))) ! [W]
-     if(copoption==0) then
-       COP_URB = COP
-     else if(copoption==1) then
-       CALL VAR_COP (COP, TC, TBLEND, ZR, FLOOR_HEIGHT,   & ! in
-                     HEATRS_URB, BASELOAD_LAND,           & ! out
-                     UTYPE,                               & ! out
-                     COP_URB)
-     endif
-     if (XLAT >= 0.) then
-       if (jmonth <= 3 .or. jmonth >= 10) then
-         if ( abs(HEATRS_URB) > BASELOAD_LAND ) then
-           QFB_HT_URB = ((COP_URB-1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         else
-           QFB_HT_URB = ((COP_URB+1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         endif
-         QFB_URB    = QFB_HT_URB                                                ! [W/m2]
-         QFB_CL_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT ! [W]
-       else
-         QFB_CL_URB = ((COP_URB+1)/COP_URB) &
-                    * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL) ! [W/m2]
-
-                  !   3 2 2 2 2 1 2 3 1  3  3 cye
-                  !   1 2 3 4 5 6 7 8 9 10 11
-
-         if ( UTYPE == 2 .or. UTYPE == 3  .or. UTYPE == 4 .or. UTYPE == 5 .or. UTYPE == 6 .or. UTYPE == 7 .or. UTYPE == 9 ) then
-           QFB_URB    = QFB_CL_URB ! [W/m2]
-         else if ( UTYPE == 1  .or. UTYPE == 8 .or. UTYPE == 10 .or. UTYPE == 11) then
-           QFB_URB    = QFB_CL_URB * 0.722 ! [W/m2] considering cooling tower
-         endif
-         QFB_HT_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL ! [W]
-       endif
-     else
-       if (jmonth <= 3 .or. jmonth >= 10) then
-         QFB_CL_URB = ((COP_URB+1)/COP_URB) &
-                    * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL) ! [W/m2]
-         if ( UTYPE == 2 .or. UTYPE == 3  .or. UTYPE == 4 .or. UTYPE == 5 .or. UTYPE == 6 .or. UTYPE == 7 .or. UTYPE == 9 ) then
-           QFB_URB    = QFB_CL_URB ! [W/m2]
-          else if ( UTYPE == 1  .or. UTYPE == 8 .or. UTYPE == 10 .or. UTYPE == 11) then
-           QFB_URB    = QFB_CL_URB * 0.722 ! [W/m2] considering cooling tower
-         endif
-         QFB_HT_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL ! [W]
-       else
-         if ( abs(HEATRS_URB) > BASELOAD_LAND ) then  ! add (2023/07/18)
-           QFB_HT_URB = ((COP_URB-1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         else
-           QFB_HT_URB = ((COP_URB+1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         endif
-         QFB_URB    = QFB_HT_URB                                                ! [W/m2]
-         QFB_CL_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT ! [W]
-       endif
-     endif
-     ECAC_URB    = ( Hout/((ZR/FLOOR_HEIGHT)*ROOF_WIDTH_kike(UTYPE)) ) / COP_URB  ! [W/floor-m2]
-     EC_URB      = ECAC_URB + AP_BASELOAD                                     ! [W/floor-m2]
-     FLXTH  = ((1.-FGR)*R*FLXTHR + FGR*R*FLXTHGR + W*FLXTHB + RW*FLXTHG)+ (AH+QFB_URB)/RHOO/CPP
-     QF_URB = AH+QFB_URB
-! -- end -- Takane-et-al.2024_GMD
    else
      FLXTH  = ((1.-FGR)*R*FLXTHR + FGR*R*FLXTHGR + W*FLXTHB + RW*FLXTHG)
-     ! -- start -- Takane-et-al.2024_GMD
-     QF_URB     = 0.
-     HEATRS_URB = 0.
-     QFB_URB    = 0.
-     QFB_CL_URB = 0.
-     QFB_HT_URB = 0.
-     ECAC_URB   = 0.
-     EC_URB     = 0.
-     COP_URB    = 0.       
-     Hin        = 0.
-     Hout       = 0.
-! -- end -- Takane-et-al.2024_GMD
    endif
    if(alhoption==1) then
      FLXHUM  = ((1.-FGR)*R*FLXHUMR + FGR*R*FLXHUMGR + W*FLXHUMB + RW*FLXHUMG)+ ALH/RHOO/ELL
@@ -1762,104 +1639,9 @@ ENDIF
  else
    if(ahoption==1) then
      FLXTH  = ( R*FLXTHR  + W*FLXTHB  + RW*FLXTHG ) + AH/RHOO/CPP
-     ! -- start -- Takane-et-al.2024_GMD
-     QF_URB     = AH
-     HEATRS_URB = 0.
-     QFB_URB    = 0.
-     QFB_CL_URB = 0.
-     QFB_HT_URB = 0.
-     ECAC_URB   = 0.
-     EC_URB     = 0.
-     COP_URB    = 0.       
-     Hin        = 0.
-     Hout       = 0.
-   else if(ahoption==2) then
-     HEATRS_URB        = ( 2.0*HGT*697.7*60.*AKSB*(TBL(4)-TBLEND)/(DZB(4)/2.) ) &
-                       + (       R*697.7*60.*AKSR*(TRL(4)-TRLEND)/(DZR(4)/2.) ) ! [W/m2]
-     OC_BASELOAD       = PERFLO * HEAT_PERSON                              ! [W/floor-m2]
-     BASELOAD          = AP_BASELOAD + OC_BASELOAD                         ! [W/floor-m2]
-     BASELOAD_LAND     = BASELOAD &
-                       * (((ZR/FLOOR_HEIGHT)*ROOF_WIDTH_kike(UTYPE))/(ROOF_WIDTH_kike(UTYPE)+ROAD_WIDTH_kike(UTYPE))) ! conver from [W/floor-m2] to [W/m2]
-     Hin  = BASELOAD*((ZR/FLOOR_HEIGHT)*ROOF_WIDTH_kike(UTYPE) &
-          + HEATRS_URB*(ROOF_WIDTH_kike(UTYPE)+ROAD_WIDTH_kike(UTYPE))) ! [W]
-     if(copoption==0) then
-       COP_URB = COP
-     else if(copoption==1) then
-       CALL VAR_COP (COP, TC, TBLEND, ZR, FLOOR_HEIGHT,   & ! in
-                     HEATRS_URB, BASELOAD_LAND,           & ! out
-                     UTYPE,                               & ! out
-                     COP_URB)
-     endif
-     if (XLAT >= 0.) then
-       if (jmonth <= 3 .or. jmonth >= 10) then
-         if ( abs(HEATRS_URB) > BASELOAD_LAND ) then  ! add (2023/07/18)
-           QFB_HT_URB = ((COP_URB-1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         else
-           QFB_HT_URB = ((COP_URB+1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         endif
-         QFB_URB    = QFB_HT_URB                                                ! [W/m2]
-         QFB_CL_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT ! [W]
-       else
-         QFB_CL_URB = ((COP_URB+1)/COP_URB) &
-                    * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL) ! [W/m2]
-         if ( UTYPE == 2 .or. UTYPE == 3  .or. UTYPE == 4 .or. UTYPE == 5 .or. UTYPE == 6 .or. UTYPE == 7 .or. UTYPE == 9 ) then
-           QFB_URB    = QFB_CL_URB ! [W/m2]
-         else if ( UTYPE == 1  .or. UTYPE == 8 .or. UTYPE == 10 .or. UTYPE == 11) then
-           QFB_URB    = QFB_CL_URB * 0.722 ! [W/m2] considering cooling tower
-         endif
-         QFB_HT_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL ! [W]
-       endif
-     else
-       if (jmonth <= 3 .or. jmonth >= 10) then
-         QFB_CL_URB = ((COP_URB+1)/COP_URB) &
-                    * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL) ! [W/m2]
-         if ( UTYPE == 2 .or. UTYPE == 3  .or. UTYPE == 4 .or. UTYPE == 5 .or. UTYPE == 6 .or. UTYPE == 7 .or. UTYPE == 9 ) then
-           QFB_URB    = QFB_CL_URB ! [W/m2]
-         else if ( UTYPE == 1  .or. UTYPE == 8 .or. UTYPE == 10 .or. UTYPE == 11) then
-           QFB_URB    = QFB_CL_URB * 0.722 ! [W/m2] considering cooling tower
-         endif
-         QFB_HT_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_CL ! [W]
-       else
-         if ( abs(HEATRS_URB) > BASELOAD_LAND ) then  ! add (2023/07/18)
-           QFB_HT_URB = ((COP_URB-1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         else
-           QFB_HT_URB = ((COP_URB+1)/COP_URB) &
-                      * ((HEATRS_URB+BASELOAD_LAND)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT) ! [W/m2]
-         endif
-         QFB_URB    = QFB_HT_URB                                                ! [W/m2]
-         QFB_CL_URB = 0.
-         Hout       = abs(Hin)*(1-AB_BUILD_RATIO)*AC_FLOOR_RATIO(tloc)*AC_USAGE_RATIO_HT ! [W]
-       endif
-     endif
-     ECAC_URB    = ( Hout/((ZR/FLOOR_HEIGHT)*ROOF_WIDTH_kike(UTYPE)) ) / COP_URB  ! [W/floor-m2]
-     EC_URB      = ECAC_URB + AP_BASELOAD                                     ! [W/floor-m2]
-     FLXTH  = ( R*FLXTHR  + W*FLXTHB  + RW*FLXTHG ) + (AH+QFB_URB)/RHOO/CPP
-     QF_URB = AH+QFB_URB
-
-
-
-
-! -- end -- Takane-et-al.2024_GMD
    else
      FLXTH  = ( R*FLXTHR  + W*FLXTHB  + RW*FLXTHG )
-     ! -- start -- Takane-et-al.2024_GMD
-     QF_URB     = 0.
-     HEATRS_URB = 0.
-     QFB_URB    = 0.
-     QFB_CL_URB = 0.
-     QFB_HT_URB = 0.
-     ECAC_URB   = 0.
-     EC_URB     = 0.
-     COP_URB    = 0.       
-     Hin        = 0.
-     Hout       = 0.
-! -- end -- Takane-et-al.2024_GMD
+
    endif
    if(alhoption==1) then
      FLXHUM = ( R*FLXHUMR + W*FLXHUMB + RW*FLXHUMG )+ ALH/RHOO/ELL
@@ -1899,13 +1681,14 @@ ENDIF
 !  diagnostic GRID AVERAGED  PSIM  PSIH  TS QS --> WRF
 !------------------------------------------------------
 
-IF (SURFACE_DIAGNOSE == 1 ) THEN
+
 
    Z0 = Z0C 
    Z0H = Z0HC
    ! Z0H = Z0C
    Z = ZA - ZDC
    ! ZNT = Z0   ! add by Dan Li
+
 
 
    XXX = 0.4*9.81*Z*TST/TA/UST/UST
@@ -1922,6 +1705,10 @@ IF (SURFACE_DIAGNOSE == 1 ) THEN
      PSIH = 2.*ALOG((1.+X*X)/2.)
    END IF
 
+
+
+
+
    GZ1OZ0 = ALOG(Z/Z0)
    CD = 0.4**2./(ALOG(Z/Z0)-PSIM)**2.
 !
@@ -1931,10 +1718,12 @@ IF (SURFACE_DIAGNOSE == 1 ) THEN
 !m   QS = QA + FLXHUM/CH/UA   ! surface humidity
 !
 
+! CHS_LOCAL = 0.4 * UST / (ALOG(Z / Z0H) - PSIH)
 
-!-------------------------------------------------------
-!  diagnostic  GRID AVERAGED  U10  V10  TH2  Q2 --> WRF
-!-------------------------------------------------------
+
+! !-------------------------------------------------------
+! !  diagnostic  GRID AVERAGED  U10  V10  TH2  Q2 --> WRF
+! !-------------------------------------------------------
 
 
    XXX2 = (2./Z)*XXX !cye
@@ -1952,9 +1741,12 @@ IF (SURFACE_DIAGNOSE == 1 ) THEN
    END IF
 
 
-!
-!m   CHS2 = 0.4*UST/(ALOG(2./Z0H)-PSIH2)
-!
+
+
+! !
+! !m   CHS2 = 0.4*UST/(ALOG(2./Z0H)-PSIH2)
+! !
+              
 
 
    XXX10 = (10./Z)*XXX
@@ -1971,7 +1763,7 @@ IF (SURFACE_DIAGNOSE == 1 ) THEN
    END IF
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
    PSIX = ALOG(Z/Z0) - PSIM  
    PSIT = ALOG(Z/Z0H) - PSIH 
 
@@ -1980,50 +1772,42 @@ IF (SURFACE_DIAGNOSE == 1 ) THEN
 
    PSIX10 = ALOG(10./Z0) - PSIM10  
    PSIT10 = ALOG(10./Z0H) - PSIH10
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
    U10 = U1 * (PSIX10/PSIX)       ! u at 10 m [m/s]
    V10 = V1 * (PSIX10/PSIX)       ! v at 10 m [m/s]
 
-   ! U2 = U1 * (PSIX2/PSIX)       ! u at 10 m [m/s]
-   ! V2 = V1 * (PSIX2/PSIX)       ! v at 10 m [m/s]
+   CHS = 0.4*UST/( ALOG(Z/Z0H) - PSIH )
+   CHS2 = 0.4*UST/(ALOG(2./(Z0H)) - PSIH2) 
 
 !   TH2 = TS + (TA-TS)*(PSIT2/PSIT)   ! potential temp at 2 m [K]
 !  TH2 = TS + (TA-TS)*(PSIT2/PSIT)   ! Fei: this seems to be temp (not potential) at 2 m [K]
 !Fei: consistant with M-O theory
 
-! CH = 0.4**2 / (PSIX * PSIT)
-! CH2 = 0.4**2 / (PSIX2 * PSIT2)
-! CHS_urban = CH * UA
-! CHS2_urban = CH2 * SQRT(U2**2 + V2**2)
+
+
+   IF (distributed_aerodynamics_option) THEN
+     TS = TA + FLXTH / (ALPHAC / (RHO * CP))  ! surface potential temp (flux temp)
+     QS = QA + FLXHUM / (ALPHAC / (RHO * CP)) ! surface humidity
+   ELSE
+      TS = TA + FLXTH/CHS    ! surface potential temp (flux temp)
+      QS = QA + FLXHUM/CHS  ! surface humidity
+   ENDIF
+
+
+     TH2 = TS + (TA - TS) * (CHS / CHS2)
+     Q2 = QS + (QA - QS) * (CHS / CHS2)
 
 
 
-CHS_urban = 0.4*UST/( ALOG(Z/Z0H) - PSIH )!cye-add
-CHS2_urban = 0.4*UST/(ALOG(2./(Z0H)) - PSIH2) !cye-add
 
 
-
-TS = TA + FLXTH/CHS_urban    ! surface potential temp (flux temp)
-QS = QA + FLXHUM/CHS_urban  ! surface humidity
-
-
-
-
-     TH2 = TS + (TA - TS) * (CHS_urban / CHS2_urban)
-     Q2 = QS + (QA - QS) * (CHS_urban / CHS2_urban)
+! TS = (TR * R + TB * W + TG * RW) / (R + RW + W)
+! QS = (QS0R * R +  QS0G * RW + QS0B * W)/(R + RW + W)
+! TH2 = TC
+! Q2 = QC
 
 
-ELSE
-
-
-
-TS = (TR * R + TB * W + TG * RW) / (R + RW + W)
-QS = (QS0R * R +  QS0G * RW + QS0B * W)/(R + RW + W)
-TH2 = TC
-Q2 = QC
-
-ENDIF
 
 
 !   TS = (LW/SIG_SI/0.88)**0.25       ! Radiative temperature [K]
@@ -2290,13 +2074,7 @@ ENDIF
                          HPERCENT_BIN,                                 & ! out
 !end BEP
                          BOUNDR,BOUNDB,BOUNDG,CH_SCHEME,TS_SCHEME,     & ! out
-! -- start -- Takane-et-al.2024_GMD
-                         AKANDA_URBAN,ALH,                             & ! out
-                         HSEQUIP, HSEQUIP_SCALE_FACTOR, COP, PERFLO,   & ! out
-                         TARGTEMP,                                     &
-                         AB_BUILD_RATIO, AC_FLOOR_RATIO,               &
-                         AC_USAGE_RATIO_CL, AC_USAGE_RATIO_HT )
-! -- end -- Takane-et-al.2024_GMD)         ! out
+                         AKANDA_URBAN,ALH )
 
    INTEGER, INTENT(IN)  :: UTYPE ,I
 
@@ -2306,13 +2084,13 @@ ENDIF
                            EPSR,EPSB,EPSG,Z0R,Z0B,Z0G,Z0HB,Z0HG,         &
                            BETR,BETB,BETG,TRLEND,TBLEND,TGLEND
    REAL, INTENT(OUT)    :: AKANDA_URBAN
-   ! -- start -- ! Takane-et-al.2024_GMD
-   REAL, INTENT(OUT)    :: HSEQUIP_SCALE_FACTOR, COP, PERFLO, TARGTEMP
-   REAL,    DIMENSION(1:24), INTENT(OUT) :: HSEQUIP 
-   REAL, INTENT(OUT)    :: AB_BUILD_RATIO
-   REAL,    DIMENSION(1:24), INTENT(OUT) :: AC_FLOOR_RATIO
-   REAL, INTENT(OUT)    :: AC_USAGE_RATIO_CL, AC_USAGE_RATIO_HT
-! -- end -- ! Takane-et-al.2024_GMD
+!  ! -- start -- ! Takane-et-al.2024_GMD
+!  REAL, INTENT(OUT)    :: HSEQUIP_SCALE_FACTOR, COP, PERFLO, TARGTEMP
+!  REAL,    DIMENSION(1:24), INTENT(OUT) :: HSEQUIP
+!  REAL, INTENT(OUT)    :: AB_BUILD_RATIO
+!  REAL,    DIMENSION(1:24), INTENT(OUT) :: AC_FLOOR_RATIO
+!  REAL, INTENT(OUT)    :: AC_USAGE_RATIO_CL, AC_USAGE_RATIO_HT
+! ! -- end -- ! Takane-et-al.2024_GMD
 !for BEP
    INTEGER,                     INTENT(OUT) :: NUMDIR
    REAL,    DIMENSION(MAXDIRS), INTENT(OUT) :: STREET_DIRECTION
@@ -2370,17 +2148,17 @@ ENDIF
    CH_SCHEME = CH_SCHEME_DATA
    TS_SCHEME = TS_SCHEME_DATA
    AKANDA_URBAN = AKANDA_URBAN_TBL(UTYPE)
-   ! -- start -- Takane-et-al.2024_GMD
-   HSEQUIP = hsequip_tbl(1:24)
-   HSEQUIP_SCALE_FACTOR = HSESF_TBL(UTYPE)
-   COP = COP_TBL(UTYPE)
-   PERFLO = PERFLO_TBL(UTYPE)
-   TARGTEMP = TARGTEMP_TBL(UTYPE)
-   AB_BUILD_RATIO = AB_BUILD_RATIO_TBL(UTYPE)
-   AC_FLOOR_RATIO = AC_FLOOR_RATIO_TBL(1:24,UTYPE)
-   AC_USAGE_RATIO_CL = AC_USAGE_RATIO_CL_TBL(UTYPE)
-   AC_USAGE_RATIO_HT = AC_USAGE_RATIO_HT_TBL(UTYPE)
-! -- end -- Takane-et-al.2024_GMD
+!  ! -- start -- Takane-et-al.2024_GMD
+!  HSEQUIP = hsequip_tbl(1:24)
+!  HSEQUIP_SCALE_FACTOR = HSESF_TBL(UTYPE)
+!  COP = COP_TBL(UTYPE)
+!  PERFLO = PERFLO_TBL(UTYPE)
+!  TARGTEMP = TARGTEMP_TBL(UTYPE)
+!  AB_BUILD_RATIO = AB_BUILD_RATIO_TBL(UTYPE)
+!  AC_FLOOR_RATIO = AC_FLOOR_RATIO_TBL(1:24,UTYPE)
+!  AC_USAGE_RATIO_CL = AC_USAGE_RATIO_CL_TBL(UTYPE)
+!  AC_USAGE_RATIO_HT = AC_USAGE_RATIO_HT_TBL(UTYPE)
+! ! -- end -- Takane-et-al.2024_GMD
 
 !for BEP
 
@@ -2624,16 +2402,16 @@ ENDIF
             if(allocate_status /= 0) FATAL_ERROR('Error allocating PV_FRAC_ROOF_TBL in urban_param_init')
             ALLOCATE( GR_FRAC_ROOF_TBL(ICATE), stat=allocate_status )
             if(allocate_status /= 0) FATAL_ERROR('Error allocating GR_FRAC_ROOF_TBL in urban_param_init')
-! -- start -- Takane-et-al.2024_GMD
-            ALLOCATE( AB_BUILD_RATIO_TBL(ICATE), stat=allocate_status )
-            if(allocate_status /= 0) FATAL_ERROR('Error allocating AB_BUILD_RATIO_TBL in urban_param_init')
-            ALLOCATE( AC_FLOOR_RATIO_TBL(24,ICATE), stat=allocate_status ) 
-            if(allocate_status /= 0) FATAL_ERROR('Error allocating AC_FLOOR_RATIO_TBL in urban_param_init')
-            ALLOCATE( AC_USAGE_RATIO_CL_TBL(ICATE), stat=allocate_status )
-            if(allocate_status /= 0) FATAL_ERROR('Error allocating AC_USAGE_RATIO_CL_TBL in urban_param_init')
-            ALLOCATE( AC_USAGE_RATIO_HT_TBL(ICATE), stat=allocate_status )
-            if(allocate_status /= 0) FATAL_ERROR('Error allocating AC_USAGE_RATIO_HT_TBL in urban_param_init')
-! -- end -- Takane-et-al.2024_GMD
+! ! -- start -- Takane-et-al.2024_GMD
+!            ALLOCATE( AB_BUILD_RATIO_TBL(ICATE), stat=allocate_status )
+!            if(allocate_status /= 0) FATAL_ERROR('Error allocating AB_BUILD_RATIO_TBL in urban_param_init')
+!            ALLOCATE( AC_FLOOR_RATIO_TBL(24,ICATE), stat=allocate_status )
+!            if(allocate_status /= 0) FATAL_ERROR('Error allocating AC_FLOOR_RATIO_TBL in urban_param_init')
+!            ALLOCATE( AC_USAGE_RATIO_CL_TBL(ICATE), stat=allocate_status )
+!            if(allocate_status /= 0) FATAL_ERROR('Error allocating AC_USAGE_RATIO_CL_TBL in urban_param_init')
+!            ALLOCATE( AC_USAGE_RATIO_HT_TBL(ICATE), stat=allocate_status )
+!            if(allocate_status /= 0) FATAL_ERROR('Error allocating AC_USAGE_RATIO_HT_TBL in urban_param_init')
+! ! -- end -- Takane-et-al.2024_GMD
 
          endif
          numdir_tbl = 0
@@ -2736,10 +2514,10 @@ ENDIF
          read(string(indx+1:),*) ts_scheme_data
       else if (name == "AHOPTION") then
          read(string(indx+1:),*) ahoption
-! -- start -- Takane-et-al.2024_GMD
-      else if (name == "COPOPTION") then
-         read(string(indx+1:),*) copoption
-! -- end -- Takane-et-al.2024_GMD
+! ! -- start -- Takane-et-al.2024_GMD
+!      else if (name == "COPOPTION") then
+!         read(string(indx+1:),*) copoption
+! ! -- end -- Takane-et-al.2024_GMD
       else if (name == "AHDIUPRF") then
          read(string(indx+1:),*) ahdiuprf(1:24)
       else if (name == "ALHOPTION") then
@@ -2841,22 +2619,22 @@ ENDIF
          read(string(indx+1:),*) gr_flag_tbl
       else if (name == "GR_TYPE") then
          read(string(indx+1:),*) gr_type_tbl
-! -- start -- Takane-et-al.2024_GMD
-      else if (name == "AB_BUILD_RATIO") then
-         read(string(indx+1:),*) ab_build_ratio_tbl(1:icate)
-      else if (name == "AC_FLOOR_RATIO") then
-         ACLOOP : do
-            read(11,'(A512)', iostat=iostatus) string
-            if (string(1:1) == "#") cycle ACLOOP
-            if (trim(string) == "") cycle ACLOOP
-            if (string == "END AC_FLOOR_RATIO") exit ACLOOP
-            read(string, *) k, ac_floor_ratio_tbl(1:24,k)
-         enddo ACLOOP
-      else if (name == "AC_USAGE_RATIO_CL") then
-         read(string(indx+1:),*) ac_usage_ratio_cl_tbl(1:icate)
-      else if (name == "AC_USAGE_RATIO_HT") then
-         read(string(indx+1:),*) ac_usage_ratio_ht_tbl(1:icate)
-! -- end -- Takane-et-al.2024_GMD
+! ! -- start -- Takane-et-al.2024_GMD
+!      else if (name == "AB_BUILD_RATIO") then
+!         read(string(indx+1:),*) ab_build_ratio_tbl(1:icate)
+!      else if (name == "AC_FLOOR_RATIO") then
+!         ACLOOP : do
+!            read(11,'(A512)', iostat=iostatus) string
+!            if (string(1:1) == "#") cycle ACLOOP
+!            if (trim(string) == "") cycle ACLOOP
+!            if (string == "END AC_FLOOR_RATIO") exit ACLOOP
+!            read(string, *) k, ac_floor_ratio_tbl(1:24,k)
+!         enddo ACLOOP
+!      else if (name == "AC_USAGE_RATIO_CL") then
+!         read(string(indx+1:),*) ac_usage_ratio_cl_tbl(1:icate)
+!      else if (name == "AC_USAGE_RATIO_HT") then
+!         read(string(indx+1:),*) ac_usage_ratio_ht_tbl(1:icate)
+! ! -- end -- Takane-et-al.2024_GMD
 
 !end BEP         
       else
@@ -2906,9 +2684,6 @@ ENDIF
       Z0C_TBL(LC) = ZR_TBL(LC) * ( 1.0 - ZDC_TBL(LC)/ZR_TBL(LC) ) * &
            exp (-(0.5 * beta_macd * Cd / (VonK**2) * ( 1.0-ZDC_TBL(LC)/ZR_TBL(LC) ) * Lambda_F )**(-0.5))
 
-      ! ZDC_TBL(LC) = 0.2 * ZR_TBL(LC) 
-
-      ! Z0C_TBL(LC) = 0.1 * ZR_TBL(LC)
 
       IF (SF_URBAN_PHYSICS == 1) THEN
          ! Include roof height variability in Macdonald
@@ -2950,245 +2725,10 @@ ENDIF
 
    END DO
 
-! ZR_TBL(1)  = 31.0
-! ZR_TBL(2)  = 16.8
-! ZR_TBL(3)  = 10.58
-! ZR_TBL(4)  = 17.63
-! ZR_TBL(5)  = 16.50
-! ZR_TBL(6)  = 8.73
-! ZR_TBL(7)  = 8.73
-! ZR_TBL(8)  = 10.52
-! ZR_TBL(9)  = 5.4
-! ZR_TBL(10) = 21.35
-! ZR_TBL(11) = 9.61
-
-! R_TBL(1)  = 0.21
-! R_TBL(2)  = 0.246
-! R_TBL(3)  = 0.248
-! R_TBL(4)  = 0.195
-! R_TBL(5)  = 0.174
-! R_TBL(6)  = 0.085
-! R_TBL(7)  = 0.085
-! R_TBL(8)  = 0.16
-! R_TBL(9)  = 0.029
-! R_TBL(10) = 0.167
-! R_TBL(11) = 0.151
-
-! HGT_TBL(1)  = 0.45
-! HGT_TBL(2)  = 0.34
-! HGT_TBL(3)  = 0.21
-! HGT_TBL(4)  = 0.27
-! HGT_TBL(5)  = 0.23
-! HGT_TBL(6)  = 0.06
-! HGT_TBL(7)  = 0.06
-! HGT_TBL(8)  = 0.12
-! HGT_TBL(9)  = 0.02
-! HGT_TBL(10) = 0.25
-! HGT_TBL(11) = 0.04
-
-!GloUCP
-! Z0C_TBL(1) = 2.83
-! Z0C_TBL(2) = 2.37
-! Z0C_TBL(3) = 0.95
-! Z0C_TBL(4) = 2.67
-! Z0C_TBL(5) = 2.57
-! Z0C_TBL(6) = 0.56
-! Z0C_TBL(7) = 0.56
-! Z0C_TBL(8) = 0.84
-! Z0C_TBL(9) = 0.20
-! Z0C_TBL(10) = 2.18
-! Z0C_TBL(11) = 0.32
-
-!distuibuted parameter urban_parameters.tar.gz: 2010s and projected 2050s urban parameters. Source: [1].
-![1] Khanh, D.N., Varquez, A. C. G., & Kanda, M. (2023). Impact of urbanization on exposure to extreme warming in megacities. Heliyon, 9(4).
-
-! Z0C_TBL(1) = 1.3
-! Z0C_TBL(2) = 1.44
-! Z0C_TBL(3) = 0.55
-! Z0C_TBL(4) = 0.78
-! Z0C_TBL(5) = 0.76
-! Z0C_TBL(6) = 0.30
-! Z0C_TBL(7) = 0.56
-! Z0C_TBL(8) = 0.281
-! Z0C_TBL(9) = 0.20
-! Z0C_TBL(10) = 0.281
-! Z0C_TBL(11) = 0.32
-
-! ZDC_TBL(1)  = 16.06
-! ZDC_TBL(2)  = 18.49
-! ZDC_TBL(3)  = 9.57
-! ZDC_TBL(4)  = 11.50
-! ZDC_TBL(5)  = 11.12
-! ZDC_TBL(6)  = 5.16
-! ZDC_TBL(7)  = 1.79
-! ZDC_TBL(8)  = 4.77
-! ZDC_TBL(9)  = 0.54
-! ZDC_TBL(10) = 4.05
-! ZDC_TBL(11) = 2.74
-
-! Z0R_TBL(1)  = 4.26
-! Z0R_TBL(2)  = 1.18
-! Z0R_TBL(3)  = 0.51
-! Z0R_TBL(4)  = 1.98
-! Z0R_TBL(5)  = 1.92
-! Z0R_TBL(6)  = 0.30
-! Z0R_TBL(7)  = 0.30
-! Z0R_TBL(8)  = 0.49
-! Z0R_TBL(9)  = 0.09
-! Z0R_TBL(10) = 2.26
-! Z0R_TBL(11) = 0.24
-
-! ZDC_TBL(1)  = 12.67
-! ZDC_TBL(2)  = 7.84
-! ZDC_TBL(3)  = 5.08
-! ZDC_TBL(4)  = 6.78
-! ZDC_TBL(5)  = 5.77
-! ZDC_TBL(6)  = 1.79
-! ZDC_TBL(7)  = 1.79
-! ZDC_TBL(8)  = 3.64
-! ZDC_TBL(9)  = 0.54
-! ZDC_TBL(10) = 7.39
-! ZDC_TBL(11) = 2.74
-
-
-! DO LC = 1, ICATE
-
-! RW_TBL(LC) = 1.0 - R_TBL(LC)
-
-! Z0HC_TBL(LC) = 0.1 * Z0C_TBL(LC)
-
-! Lambda_FR  = SIGMA_ZED_TBL(LC) / ( ROAD_WIDTH(LC) + ROOF_WIDTH(LC) )
-! Z0R_TBL(LC) = ZR_TBL(LC) * ( 1.0 - ZDC_TBL(LC)/ZR_TBL(LC) ) &
-!       * exp ( -(0.5 * beta_macd * Cd / (VonK**2) &
-!       * ( 1.0-ZDC_TBL(LC)/ZR_TBL(LC) ) * Lambda_FR )**(-0.5))
-! !
-! ! Calculate Sky View Factor:
-! !
-! DHGT=HGT_TBL(LC)/100.
-! HGT=0.
-! VFWS=0.
-! HGT=HGT_TBL(LC)-DHGT/2.
-! do k=1,99
-!    HGT=HGT-DHGT
-!    VFWS=VFWS+0.25*(1.-HGT/SQRT(HGT**2.+RW_TBL(LC)**2.))
-! end do
-
-! VFWS=VFWS/99.
-! VFWS=VFWS*2.
-
-! VFGS=1.-2.*VFWS*HGT_TBL(LC)/RW_TBL(LC)
-! SVF_TBL(LC)=VFGS
-
-! END DO
-
-
-IF (distributed_aerodynamics_option) THEN
-
-ZR_TBL(1)  = 31.0
-ZR_TBL(2)  = 16.8
-ZR_TBL(3)  = 10.58
-ZR_TBL(4)  = 17.63
-ZR_TBL(5)  = 16.50
-ZR_TBL(6)  = 8.73
-ZR_TBL(7)  = 8.73
-ZR_TBL(8)  = 10.52
-ZR_TBL(9)  = 5.4
-ZR_TBL(10) = 21.35
-ZR_TBL(11) = 9.61
-
-R_TBL(1)  = 0.21
-R_TBL(2)  = 0.246
-R_TBL(3)  = 0.248
-R_TBL(4)  = 0.195
-R_TBL(5)  = 0.174
-R_TBL(6)  = 0.085
-R_TBL(7)  = 0.085
-R_TBL(8)  = 0.16
-R_TBL(9)  = 0.029
-R_TBL(10) = 0.167
-R_TBL(11) = 0.151
-
-HGT_TBL(1)  = 0.45
-HGT_TBL(2)  = 0.34
-HGT_TBL(3)  = 0.21
-HGT_TBL(4)  = 0.27
-HGT_TBL(5)  = 0.23
-HGT_TBL(6)  = 0.06
-HGT_TBL(7)  = 0.06
-HGT_TBL(8)  = 0.12
-HGT_TBL(9)  = 0.02
-HGT_TBL(10) = 0.25
-HGT_TBL(11) = 0.04
-
-Z0C_TBL(1) = 2.83
-Z0C_TBL(2) = 2.37
-Z0C_TBL(3) = 0.95
-Z0C_TBL(4) = 2.67
-Z0C_TBL(5) = 2.57
-Z0C_TBL(6) = 0.56
-Z0C_TBL(7) = 0.56
-Z0C_TBL(8) = 0.84
-Z0C_TBL(9) = 0.20
-Z0C_TBL(10) = 2.18
-Z0C_TBL(11) = 0.32
-
-Z0R_TBL(1)  = 4.26
-Z0R_TBL(2)  = 1.18
-Z0R_TBL(3)  = 0.51
-Z0R_TBL(4)  = 1.98
-Z0R_TBL(5)  = 1.92
-Z0R_TBL(6)  = 0.30
-Z0R_TBL(7)  = 0.30
-Z0R_TBL(8)  = 0.49
-Z0R_TBL(9)  = 0.09
-Z0R_TBL(10) = 2.26
-Z0R_TBL(11) = 0.24
-
-ZDC_TBL(1)  = 12.67
-ZDC_TBL(2)  = 7.84
-ZDC_TBL(3)  = 5.08
-ZDC_TBL(4)  = 6.78
-ZDC_TBL(5)  = 5.77
-ZDC_TBL(6)  = 1.79
-ZDC_TBL(7)  = 1.79
-ZDC_TBL(8)  = 3.64
-ZDC_TBL(9)  = 0.54
-ZDC_TBL(10) = 7.39
-ZDC_TBL(11) = 2.74
-
-
-DO LC = 1, ICATE
-
-RW_TBL(LC) = 1.0 - R_TBL(LC)
-
-Z0HC_TBL(LC) = 0.1 * Z0C_TBL(LC)
-
-
-!
-! Calculate Sky View Factor:
-!
-DHGT=HGT_TBL(LC)/100.
-HGT=0.
-VFWS=0.
-HGT=HGT_TBL(LC)-DHGT/2.
-do k=1,99
-   HGT=HGT-DHGT
-   VFWS=VFWS+0.25*(1.-HGT/SQRT(HGT**2.+RW_TBL(LC)**2.))
-end do
-
-VFWS=VFWS/99.
-VFWS=VFWS*2.
-
-VFGS=1.-2.*VFWS*HGT_TBL(LC)/RW_TBL(LC)
-SVF_TBL(LC)=VFGS
-
-END DO
-
-END IF
-
-
    deallocate(roof_width)
    deallocate(road_width)
+
+   ! urban_param CSV diagnostic removed (cye)
 
    END SUBROUTINE urban_param_init
 !===========================================================================
@@ -3383,6 +2923,7 @@ END IF
    INTEGER :: SWITCH_URB
 
    INTEGER :: I,J,K,CHECK
+   INTEGER, SAVE :: bep_init_diag_cell = -1
 
    CHECK = 0
 
@@ -3601,8 +3142,23 @@ G0G_URB2D(I,J)=0.
         SFR_URB3D(I,:,J)=0.
         SFG_URB3D(I,:,J)=0.
        
-       ENDIF 
-              
+       ENDIF
+
+       ! BEP init diagnostic: print first urban cell building temps
+       IF((SF_URBAN_PHYSICS.eq.2).OR.(SF_URBAN_PHYSICS.eq.3)) THEN
+         IF (bep_init_diag_cell == -1 .and. UTYPE_URB2D(I,J) > 0) THEN
+           bep_init_diag_cell = I
+           write(mesg,'(A,I6,A,I3,A,F10.4)') 'BEP_INIT cell=',I,' utype=',UTYPE_URB2D(I,J),' tlayer0=',tlayer0_urb(I,1,J)
+           WRITE_MESSAGE(mesg)
+           write(mesg,'(A,5F12.4)') 'BEP_INIT TRB_URB4D(1:5)=',(TRB_URB4D(I,K,J),K=1,5)
+           WRITE_MESSAGE(mesg)
+           write(mesg,'(A,5F12.4)') 'BEP_INIT TW1_URB4D(1:5)=',(TW1_URB4D(I,K,J),K=1,5)
+           WRITE_MESSAGE(mesg)
+           write(mesg,'(A,5F12.4)') 'BEP_INIT TGB_URB4D(1:5)=',(TGB_URB4D(I,K,J),K=1,5)
+           WRITE_MESSAGE(mesg)
+         ENDIF
+       ENDIF
+
       if (SF_URBAN_PHYSICS.EQ.3) then
          LF_AC_URB3D(I,J)=0.
          SF_AC_URB3D(I,J)=0.
@@ -3636,8 +3192,21 @@ G0G_URB2D(I,J)=0.
             TGLEV_URB3D(I,:,J)=tlayer0_urb(I,1,J)
             TFLEV_URB3D(I,:,J)=tlayer0_urb(I,1,J)
             QLEV_URB3D(I,:,J)=0.01
+!!BEP_INIT diag: write TLEV_URB3D for cell 2346 to file
+!            IF (I == 2346 .and. J == 1 .and. UTYPE_URB2D(I,J) > 0) THEN
+!              OPEN(9878,file='urb_init_diag.txt',status='replace')
+!              WRITE(9878,'(A,I6,A,F10.4,A,I3)') 'URB_INIT cell=',I,' tlayer0=',tlayer0_urb(I,1,J),' utype=',UTYPE_URB2D(I,J)
+!              WRITE(9878,'(A,5F15.6)') 'URB_INIT TLEV_URB3D(1:5)=',(TLEV_URB3D(I,K,J),K=1,5)
+!              CLOSE(9878)
+!            ENDIF
             SFWIN1_URB3D(I,:,J)=0.
             SFWIN2_URB3D(I,:,J)=0.
+!!diag: check TLEV after SFWIN zeroing (cell 2346)
+!            IF (I == 2346 .and. J == 1) THEN
+!              OPEN(9882,file='corrupt_after_sfwin.txt',status='replace')
+!              WRITE(9882,'(A,3F15.6)') 'AFTER_SFWIN tlev(2346,1:3)=',TLEV_URB3D(2346,1,1),TLEV_URB3D(2346,2,1),TLEV_URB3D(2346,3,1)
+!              CLOSE(9882)
+!            ENDIF
 !rm         LF_AC_URB3D(I,J)=0.
 !rm         SF_AC_URB3D(I,J)=0.
 !rm         CM_AC_URB3D(I,J)=0.
@@ -3646,9 +3215,24 @@ G0G_URB2D(I,J)=0.
 
       endif
 
+!!diag: check TLEV after leaving UTYPE>0 block (cell 2346)
+!      IF (I == 2346 .and. J == 1) THEN
+!        OPEN(9883,file='corrupt_after_utype_end.txt',status='replace')
+!        WRITE(9883,'(A,3F15.6)') 'AFTER_UTYPE tlev(2346,1:3)=',TLEV_URB3D(2346,1,1),TLEV_URB3D(2346,2,1),TLEV_URB3D(2346,3,1)
+!        CLOSE(9883)
+!      ENDIF
+
 !      IF( sf_urban_physics .EQ. 2 )THEN
       IF((SF_URBAN_PHYSICS.eq.2).OR.(SF_URBAN_PHYSICS.eq.3)) THEN
-      DO K= KMS,KME
+!!debug: print KMS,KME for first urban cell
+!      IF (I == 2346 .and. J == 1) THEN
+!        OPEN(9881,file='kms_kme_diag.txt',status='replace')
+!        WRITE(9881,'(A,2I10)') 'KMS,KME=',KMS,KME
+!        WRITE(9881,'(A,2I10)') 'LBOUND(SF_BEP,2)=',LBOUND(SF_BEP,2),UBOUND(SF_BEP,2)
+!        WRITE(9881,'(A,2I10)') 'LBOUND(VL_BEP,2)=',LBOUND(VL_BEP,2),UBOUND(VL_BEP,2)
+!        CLOSE(9881)
+!      ENDIF
+      DO K= LBOUND(SF_BEP,2), UBOUND(SF_BEP,2)
           SF_BEP(I,K,J)=1.
           VL_BEP(I,K,J)=1.
           A_U_BEP(I,K,J)=0.
@@ -3664,6 +3248,12 @@ G0G_URB2D(I,J)=0.
           DLG_BEP(I,K,J)=0.
           DL_U_BEP(I,K,J)=0.
       END DO
+!!diag: check TLEV after DO K loop (cell 2346)
+!      IF (I == 2346 .and. J == 1) THEN
+!        OPEN(9884,file='corrupt_after_dok.txt',status='replace')
+!        WRITE(9884,'(A,3F15.6)') 'AFTER_DOK tlev(2346,1:3)=',TLEV_URB3D(2346,1,1),TLEV_URB3D(2346,2,1),TLEV_URB3D(2346,3,1)
+!        CLOSE(9884)
+!      ENDIF
       ENDIF       !sf_urban_physics=2
      ENDIF        !restart
 
@@ -3722,8 +3312,24 @@ G0G_URB2D(I,J)=0.
        END IF
        END IF
 
+!!diag: check if later I loops corrupt cell 2346 (only owning task)
+!   IF (ims <= 2346 .and. ime >= 2346) THEN
+!     IF (I >= 2346 .and. J == 1 .and. TLEV_URB3D(2346,1,1) < 100.0) THEN
+!       OPEN(9885,file='corrupt_who.txt',status='replace')
+!       WRITE(9885,'(A,I6,A,F15.6)') 'CORRUPT at I=',I,' tlev(2346,1,1)=',TLEV_URB3D(2346,1,1)
+!       CLOSE(9885)
+!     ENDIF
+!   ENDIF
     END DO
    END DO
+!!diag: check TLEV right before RETURN (only owning task)
+!   IF (ims <= 2346 .and. ime >= 2346) THEN
+!     IF (TLEV_URB3D(2346,1,1) < 100.0) THEN
+!       OPEN(9886,file='corrupt_at_return.txt',status='replace')
+!       WRITE(9886,'(A,F15.6)') 'AT_RETURN tlev(2346,1,1)=',TLEV_URB3D(2346,1,1)
+!       CLOSE(9886)
+!     ENDIF
+!   ENDIF
    RETURN
    END SUBROUTINE urban_var_init
 !===========================================================================
@@ -3889,7 +3495,7 @@ SUBROUTINE SFCDIF_URB (ZLM,Z0,THZ0,THLM,SFCSPD,AKANDA,AKMS,AKHS,RLMO,CD,ZT_OUT,V
 
 ! ----------------------------------------------------------------------
 ! KCL/TL Try Kanda approach instead (Kanda et al. 2007, JAMC)
-!      ZT = EXP (ZILFC * SQRT (USTAR * Z0))* Z0
+   !   ZT = EXP (ZILFC * SQRT (USTAR * Z0))* Z0
       IF (PRESENT(VEGFRAC)) THEN
         ! Kawai et al. (2009) JAMC
         ZT = EXP (2.0-(AKANDA-0.9*VEGFRAC**0.29)*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
@@ -3897,7 +3503,7 @@ SUBROUTINE SFCDIF_URB (ZLM,Z0,THZ0,THLM,SFCSPD,AKANDA,AKMS,AKHS,RLMO,CD,ZT_OUT,V
       ZT = EXP (2.0-AKANDA*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
       END IF
       
-      ZT = 0.1 * Z0 !cye
+      ! ZT = 0.1 * Z0 !cye
 
       ZSLU = ZLM + ZU
 
@@ -3966,12 +3572,12 @@ SUBROUTINE SFCDIF_URB (ZLM,Z0,THZ0,THLM,SFCSPD,AKANDA,AKMS,AKHS,RLMO,CD,ZT_OUT,V
             USTAR = MAX (SQRT (AKMS * SQRT (DU2+ WSTAR2)),EPSUST)
             ! KCL/TL
             ! ZT = EXP (ZILFC * SQRT (USTAR * Z0))* Z0
-            IF (PRESENT(VEGFRAC)) THEN
-              ! Kawai et al. (2009) JAMC
-              ZT = EXP (2.0-(AKANDA-0.9*VEGFRAC**0.29)*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
-            ELSE
-            ZT = EXP (2.0-AKANDA*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
-            END IF
+            ! IF (PRESENT(VEGFRAC)) THEN
+            !   ! Kawai et al. (2009) JAMC
+            !   ZT = EXP (2.0-(AKANDA-0.9*VEGFRAC**0.29)*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
+            ! ELSE
+            ! ZT = EXP (2.0-AKANDA*(SQVISC**2 * USTAR * Z0)**0.25)* Z0
+            ! END IF
 
             ZT = 0.1 * Z0 !cye
 
@@ -4855,63 +4461,63 @@ SUBROUTINE SFCDIF_URB (ZLM,Z0,THZ0,THLM,SFCSPD,AKANDA,AKMS,AKHS,RLMO,CD,ZT_OUT,V
 ! ----------------------------------------------------------------------
   END SUBROUTINE TDFCND
 ! ----------------------------------------------------------------------
-! -- start -- Takane-et-al.2024_GMD
-! ----------------------------------------------------------------------
-      SUBROUTINE VAR_COP (COP, TC, TBLEND, ZR, FLOOR_HEIGHT,   & ! in
-                          HEATRS_URB, BASELOAD_LAND,           & ! out
-                          UTYPE,                               & ! out
-                          COP_URB)
-! ----------------------------------------------------------------------
-      IMPLICIT NONE
-      REAL                :: COP, TARGTEMP, ZR, FLOOR_HEIGHT, TBLEND
-      REAL, INTENT(IN)    :: TC
-      REAL, INTENT(IN)    :: HEATRS_URB
-      REAL                :: BASELOAD_LAND
-      INTEGER, INTENT(IN) :: UTYPE ! urban type [1=Commercial/Industrial, 2=High-intensity residential, 
-                                   ! 3=low-intensity residential]
-      REAL, INTENT(OUT)   :: COP_URB
-      REAL                :: X, Y, Z, g
-      REAL                :: fq, fp, fx
- 
-!C0210 COP estimation parameter set
-      X = TC - 273.15     ! outdoor temperaturu (deg C)
-      Y = TBLEND - 273.15 ! 室内空気湿球温度（℃）
-      Z = 1.              ! 部分負荷率（-）
-
-!C0210 g ： 能力、入力特性の変曲判定式
-      g = 52.8 - 1.65*X - Y
-
-!C0210 fq：能力特性値の算出
-      if ( g .GE. 0.0 ) then
-        fq = 3.50*10.0**(-1) + 3.82*10.0**(-2)*Y
-      else
-        fq = 3.49*10.0**(-1) + 2.93*10.0**(-3)*X + 4.35*10.0**(-2)*Y  &
-           - 4.20*10.0**(-4)*X*Y
-      end if
-
-!C0210 fp：入力特性値の算出
-      if ( g .GE. 0.0 ) then
-        fp = 5.68*10.0**(-1) + 2.80*10.0**(-3)*X + 9.19*10.0**(-3)*Y  &
-           - 3.10*10.0**(-5)*X*Y
-      else
-        fp = 1.66*10.0**(-1) + 1.71*10.0**(-2)*X + 1.80*10.0**(-2)*Y  &
-           - 1.64*10.0**(-4)*X*Y
-      end if
-
-      if ( UTYPE == 1 ) then  ! MEACH1
-!C0210 fx：部分負荷特性値の算出
-        fx = 0.852618*Z**2 - 0.03397*Z + 0.18353   !Kike20171120 add functiondefined by Mr.Kuwayama
-      else                    ! MEACH2
-        fx = 0.788958*Z**2 + 0.099231*Z + 0.113276
-      endif
-
-!C0210 COP_URBの算出
-      COP_URB =  COP*fq*Z / (fp*fx)
-
-      RETURN
-! ----------------------------------------------------------------------
-  END SUBROUTINE VAR_COP
-! ----------------------------------------------------------------------
-! -- end -- Takane-et-al.2024_GMD
+! ! -- start -- Takane-et-al.2024_GMD
+! ! ----------------------------------------------------------------------
+!      SUBROUTINE VAR_COP (COP, TC, TBLEND, ZR, FLOOR_HEIGHT,   & ! in
+!                          HEATRS_URB, BASELOAD_LAND,           & ! out
+!                          UTYPE,                               & ! out
+!                          COP_URB)
+! ! ----------------------------------------------------------------------
+!      IMPLICIT NONE
+!      REAL                :: COP, TARGTEMP, ZR, FLOOR_HEIGHT, TBLEND
+!      REAL, INTENT(IN)    :: TC
+!      REAL, INTENT(IN)    :: HEATRS_URB
+!      REAL                :: BASELOAD_LAND
+!      INTEGER, INTENT(IN) :: UTYPE ! urban type [1=Commercial/Industrial, 2=High-intensity residential,
+!                                   ! 3=low-intensity residential]
+!      REAL, INTENT(OUT)   :: COP_URB
+!      REAL                :: X, Y, Z, g
+!      REAL                :: fq, fp, fx
+!
+! !C0210 COP estimation parameter set
+!      X = TC - 273.15     ! outdoor temperaturu (deg C)
+!      Y = TBLEND - 273.15
+!      Z = 1.
+!
+! !C0210 g
+!      g = 52.8 - 1.65*X - Y
+!
+! !C0210 fq
+!      if ( g .GE. 0.0 ) then
+!        fq = 3.50*10.0**(-1) + 3.82*10.0**(-2)*Y
+!      else
+!        fq = 3.49*10.0**(-1) + 2.93*10.0**(-3)*X + 4.35*10.0**(-2)*Y  &
+!           - 4.20*10.0**(-4)*X*Y
+!      end if
+!
+! !C0210 fp
+!      if ( g .GE. 0.0 ) then
+!        fp = 5.68*10.0**(-1) + 2.80*10.0**(-3)*X + 9.19*10.0**(-3)*Y  &
+!           - 3.10*10.0**(-5)*X*Y
+!      else
+!        fp = 1.66*10.0**(-1) + 1.71*10.0**(-2)*X + 1.80*10.0**(-2)*Y  &
+!           - 1.64*10.0**(-4)*X*Y
+!      end if
+!
+!      if ( UTYPE == 1 ) then  ! MEACH1
+! !C0210 fx
+!        fx = 0.852618*Z**2 - 0.03397*Z + 0.18353   !Kike20171120 add functiondefined by Mr.Kuwayama
+!      else                    ! MEACH2
+!        fx = 0.788958*Z**2 + 0.099231*Z + 0.113276
+!      endif
+!
+! !C0210 COP_URB
+!      COP_URB =  COP*fq*Z / (fp*fx)
+!
+!      RETURN
+! ! ----------------------------------------------------------------------
+!  END SUBROUTINE VAR_COP
+! ! ----------------------------------------------------------------------
+! ! -- end -- Takane-et-al.2024_GMD
 !===========================================================================
 END MODULE module_sf_urban
