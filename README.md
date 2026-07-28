@@ -93,6 +93,18 @@ Users should therefore check the local building-height parameters in `URBPARM*.T
 
 Users may modify `config_specified_zeta_levels` in the `&vertical_grid` namelist group of `namelist.init_atmosphere` to point to a custom vertical-coordinate file. This is useful for urban simulations where the lowest model level must be adjusted to remain above the local urban canopy height constraint.
 
+An example vertical level file (56 levels, first level at ~76 m, model top at 30 km) is provided in:
+
+```text
+vertical_levels/urban_ZR_75.txt
+```
+
+To use it, set:
+
+```text
+config_specified_zeta_levels = 'vertical_levels/urban_ZR_75.txt'
+```
+
 ## General Usage
 
 Build and run instructions for the general MPAS framework and MPAS-Atmosphere core are unchanged from the official v8.2.2 release. Please refer to the official MPAS-Atmosphere user guide and documentation on the MPAS-Dev website for the standard workflow.
